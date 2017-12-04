@@ -15,9 +15,15 @@ public class DayFour {
 
    out: while ((line = in.readLine()) != null) {
             Set<String> aSet = new HashSet<>();
-            String arr[] = line.split(" ");
+
+            // Get a String array of all elements on this line
+            String[] arr = line.split(" ");
+
+            // For each element, conver to a character array, order, and then apply to the set
             for (String element : arr) {
-                if(!aSet.add(element)) {
+                char[] charArr = element.toCharArray();
+                Arrays.sort(charArr);
+                if(!aSet.add(new String(charArr))) {
                     continue out;
                 }
             }
