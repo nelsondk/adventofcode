@@ -1,3 +1,6 @@
+import java.awt.Point;
+import java.util.*;
+
 public class DayThree {
 
     private static int input = 361527;
@@ -9,6 +12,8 @@ public class DayThree {
     
     private static int xLoc, yLoc; // The position of the unit compared to a 0,0 origin
 
+    private static Map<Point, Integer> valueMap = new LinkedHashMap<>();
+
     public static void main(String[] args) {
         System.out.println("Final Answer: " + getAnswer());
     }
@@ -19,11 +24,12 @@ public class DayThree {
         int currentStep = 0;  // How many steps we've taken at the moment in any given direction
         boolean increaseStepLimit = false; // when true, increase the stepLimit by 1
         
-        int i = 1;
-        while (i < input) {
-            i++;  // Update the number we are operating on
-            currentStep++; // Update how many steps we've taken in this direction
-            
+        int value = 1;
+
+        valueMap.put(new Point(0,0), value);  // Starting value
+       
+        int i = 0; 
+        while (value < input) {
             // Now update our distance from center horiztonally or vertically
             if (direction == RIGHT) {
               // increase horizonal distance from center
@@ -38,6 +44,11 @@ public class DayThree {
               // decrease vertical distance from center
               yLoc--;
             }
+
+            value = getNewValue(xLoc, yLoc);
+            valueMap.put(new Point(xLoc, yLoc), value);
+            currentStep++; // Update how many steps we've taken in this direction
+
             
             // If this new step causes us to hit our limit, do a whole host of things
             if (currentStep == stepLimit) {
@@ -59,13 +70,54 @@ public class DayThree {
             }
         }
         
-        // Now add the absolute values of the x/y positions
-        System.out.println("xLoc: " + xLoc);
-        System.out.println("yLoc: " + yLoc);
-        
-        return Math.abs(xLoc) + Math.abs(yLoc);
+        return value;
     }
 
-    
-    
+    public static int getNewValue(int x, int y) {
+        int retVal = 0;
+        
+        Point topLeftPoint = new Point(x-1, y+1);
+        Point topPoint = new Point(x, y+1);
+        Point topRightPoint = new Point(x+1, y+1);
+        Point leftPoint = new Point(x-1, y);
+        Point rightPoint = new Point(x+1, y);
+        Point bottomLeftPoint = new Point(x-1, y-1);
+        Point bottomPoint = new Point (x, y-1);
+        Point bottomRightPoint = new Point(x+1, y-1);
+
+        // Check top-left
+        if (valueMap.containsKey(topLeftPoint)) {
+            retVal += valueMap.get(topLeftPoint);
+        }
+        // Check top
+        if (valueMap.containsKey(topPoint)) {
+            retVal += valueMap.get(topPoint);
+        }
+        // Check top-right
+        if (valueMap.containsKey(topRightPoint)) {
+            retVal += valueMap.get(topRightPoint);
+        }
+        // Check left
+        if (valueMap.containsKey(leftPoint)) {
+            retVal += valueMap.get(leftPoint);
+        }
+        // Check right
+        if (valueMap.containsKey(rightPoint)) {
+            retVal += valueMap.get(rightPoint);
+        }
+        // Check bottom-left
+        if (valueMap.containsKey(bottomLeftPoint)) {
+            retVal += valueMap.get(bottomLeftPoint);
+        }
+        // Check bottom
+        if (valueMap.containsKey(bottomPoint)) {
+            retVal += valueMap.get(bottomPoint);
+        }
+        // Check bottom-right
+        if (valueMap.containsKey(bottomRightPoint)) {
+            retVal += valueMap.get(bottomRightPoint);
+        }
+
+        return retVal;
+    }
 }
