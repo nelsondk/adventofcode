@@ -9,20 +9,13 @@ public class DayFive {
         int numSteps = 0;
         try {
             while (true) {
-//                System.out.println("Getting from index(" + index + ")");
                 int tmp = maze.get(index);
-//                System.out.println("Got value: " + tmp);
-//                System.out.println("Replacing index(" + index + ") with value" + (tmp + 1));
                 if (tmp >= 3) {
                     maze.set(index, tmp - 1);
                 } else {
                     maze.set(index, tmp + 1);
                 }
-//                System.out.println("Next index is: " + (index + tmp));
                 index += tmp;
-
-//                System.out.println("LIST: " + maze);
-//                System.out.println("");
                 numSteps++;
             }
         } catch (Exception e) {
