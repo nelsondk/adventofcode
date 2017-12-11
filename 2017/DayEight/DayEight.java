@@ -3,6 +3,8 @@ import java.io.*;
 
 public class DayEight {
     private static Map<String, Integer> registers = new HashMap<>();
+    private static int largestVal = 0;  // Assumes we go positive at some point...
+    private static int numOfOperations = 0; // Just curious
 
     public static void main(String[] args) throws Exception {
         List<String> input = getInput();
@@ -26,12 +28,7 @@ public class DayEight {
     }
 
     private static void printAnswer() {
-        int largestVal = registers.get(registers.keySet().toArray()[0]);
-        for (int val : registers.values()) {
-            if (val > largestVal) {
-                largestVal = val;
-            }
-        }
+        System.out.println("Num of operations: " + numOfOperations);
         System.out.println("FINAL ANSWER: " + largestVal);
     }
 
@@ -63,6 +60,8 @@ public class DayEight {
     }
 
     private static void performOperation(String id, String operation) {
+        numOfOperations++;
+
         int sign = 1;
         if (operation.substring(0, operation.indexOf(" ")).equals("dec")) {
             sign = -1;
@@ -70,6 +69,9 @@ public class DayEight {
 
         int modValue = Integer.parseInt(operation.substring(operation.indexOf(" ")).trim());
         int newValue = registers.get(id) + (sign * modValue);
+        if (newValue >  largestVal) {
+            largestVal = newValue;
+        }
         registers.put(id, newValue);
     }
 
