@@ -14,18 +14,18 @@ public class DayTwelve {
 
                 Set<Integer> mapValue = getMapValue(valueSet, new HashSet<Integer>());
                 groupMap.put(key, mapValue);
-
-                //Set<Integer> newSet = getValues(values);
             }
         }
         
         int groupsWithZero = 0;
+        Set<Set<Integer>> groupSet = new HashSet<>();
         for (Set<Integer> valueSet : groupMap.values()) {
+            groupSet.add(valueSet); 
             if (valueSet.contains(0)) {
                 groupsWithZero++;
             }
         }
-        System.out.println("FINAL ANSWER: " + groupsWithZero);
+        System.out.println("FINAL ANSWER: " + groupSet.size());
     }
 
     private static Set<Integer> getMapValue(Set<Integer> values, Set<Integer> mapValue) {
