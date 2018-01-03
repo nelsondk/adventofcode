@@ -88,7 +88,13 @@ public class DayTen {
         }
         System.out.println("FINAL HASH: " + finalHash);
         
+<<<<<<< HEAD
     }
+=======
+        System.out.println("Skip size: " + skipSize);
+        System.out.println("Answer: " + (list[0] * list[1]));
+	}
+>>>>>>> Day 13 part 1
     
     private static Integer[] reverse(Integer[] subList) {
         Integer[] retVal = new Integer[subList.length];
